@@ -1,8 +1,10 @@
 require 'sinatra'   # gem 'sinatra'
 require 'line/bot'  # gem 'line-bot-api'
-require 'config_env'
 
-ConfigEnv.path_to_config("#{__dir__}/config/config_env.rb")
+configure :development, :test do
+  require 'config_env'
+  ConfigEnv.path_to_config("#{__dir__}/config_env.rb")
+end
 
 def client
   @client ||= Line::Bot::Client.new { |config|
