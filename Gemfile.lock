@@ -8,7 +8,6 @@ GEM
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
-    rake (12.0.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -26,7 +25,6 @@ DEPENDENCIES
   config_env
   line-bot-api
   rack
-  rake
   sinatra
   thin
 
