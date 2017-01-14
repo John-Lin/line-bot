@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 require 'sinatra'   # gem 'sinatra'
 require 'line/bot'  # gem 'line-bot-api'
 require 'forecast_io'
@@ -47,16 +50,22 @@ post '/callback' do
         # reply event, message
         # client.reply_message(event['replyToken'], message)
 
-        # Weather
-        f = ForecastIO.forecast(25.03, 121.30, params: { units: 'si', lang: 'zh-tw' })
+        weather_keyword = event.message['text'].include? "天氣"
+        temperature_keyword = event.message['text'].include? "氣溫"
+        if weather_keyword or temperature_keyword
+          # Weather
+          f = ForecastIO.forecast(25.03, 121.30, params: { units: 'si', lang: 'zh-tw' })
 
-        cur_temp_round = f.currently.temperature.round
-        cur_appar_round = f.currently.apparentTemperature
-        precip_probability_percent = f.currently.precipProbability * 100
-        humidity_percent = f.currently.humidity * 100
+          cur_temp_round = f.currently.temperature.round
+          cur_appar_round = f.currently.apparentTemperature.round
+          precip_probability_percent = f.currently.precipProbability * 100
+          humidity_percent = f.currently.humidity * 100
 
-        report = "#{f.currently.summary}\n目前氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%"
-        reply event, textmsg(report)
+          report = "#{f.currently.summary}\n目前氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%"
+          reply event, textmsg(report)
+        else
+          p 'Unimplemented'
+        end
 
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         reply event, textmsg("謝謝分享，但我現在還看不懂圖片與影片呢。")
