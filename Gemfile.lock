@@ -4,7 +4,16 @@ GEM
     config_env (0.1.2)
     daemons (1.2.4)
     eventmachine (1.2.1)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
+    forecast_io (2.0.1)
+      faraday
+      hashie
+      multi_json
+    hashie (3.4.6)
     line-bot-api (1.0.0)
+    multi_json (1.12.1)
+    multipart-post (2.0.0)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -23,6 +32,7 @@ PLATFORMS
 
 DEPENDENCIES
   config_env
+  forecast_io
   line-bot-api
   rack
   sinatra
