@@ -8,6 +8,10 @@ configure :development, :test do
   ForecastIO.api_key = ENV["FORECASTIO_APIKEY"]
 end
 
+configure :production do
+  ForecastIO.api_key = ENV["FORECASTIO_APIKEY"]
+end
+
 def client
   @client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
