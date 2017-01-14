@@ -50,7 +50,12 @@ post '/callback' do
         # Weather
         f = ForecastIO.forecast(25.03, 121.30, params: { units: 'si', lang: 'zh-tw' })
 
-        report = "目前氣溫：#{f.currently.temperature}\n/體感溫度：#{f.currently.apparentTemperature}\n降雨機率：#{f.currently.precipProbability}\n濕度：#{f.currently.humidity}"
+        cur_temp_round = f.currently.temperature.round
+        cur_appar_round = f.currently.apparentTemperature
+        precip_probability_percent = f.currently.precipProbability * 100
+        humidity_percent = f.currently.humidity * 100
+
+        report = "#{f.currently.summary}\n目前氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%"
         reply event, textmsg(report)
 
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
