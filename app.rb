@@ -58,7 +58,7 @@ post '/callback' do
 
           cur_temp_round = f.currently.temperature.round
           cur_appar_round = f.currently.apparentTemperature.round
-          precip_probability_percent = f.currently.precipProbability * 100
+          precip_probability_percent = f.currently.precipProbability.round * 100
           humidity_percent = f.currently.humidity * 100
 
           report = "#{f.currently.summary}\n目前氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%\n一週預報：#{f.daily.summary}"
