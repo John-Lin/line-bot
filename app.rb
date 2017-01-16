@@ -50,7 +50,7 @@ post '/callback' do
         precip_probability_percent = (f.currently.precipProbability * 100).round
         humidity_percent = (f.currently.humidity * 100).round
 
-        report = "#{address}/n今日#{f.currently.summary}\n氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%\n一週預報：#{f.daily.summary}"
+        report = "#{address}\n今日#{f.currently.summary}\n氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%\n一週預報：#{f.daily.summary}"
         reply event, textmsg(report)
       when Line::Bot::Event::MessageType::Text
         message = {
