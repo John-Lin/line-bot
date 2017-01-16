@@ -41,7 +41,7 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Location
-        latitude = vent.message['latitude']
+        latitude = event.message['latitude']
         longitude = event.message['longitude']
         f = ForecastIO.forecast(latitude, longitude, params: { units: 'si', lang: 'zh-tw' })
         cur_temp_round = f.currently.temperature.round
