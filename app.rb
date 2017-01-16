@@ -40,6 +40,17 @@ post '/callback' do
     case event
     when Line::Bot::Event::Message
       case event.type
+      when Line::Bot::Event::MessageType::Location
+        latitude = vent.message['latitude']
+        longitude = event.message['longitude']
+        f = ForecastIO.forecast(latitude, longitude, params: { units: 'si', lang: 'zh-tw' })
+        cur_temp_round = f.currently.temperature.round
+        cur_appar_round = f.currently.apparentTemperature.round
+        precip_probability_percent = (f.currently.precipProbability * 100).round
+        humidity_percent = (f.currently.humidity * 100).round
+
+        report = "#{f.currently.summary}\n目前氣溫：#{cur_temp_round}°C\n體感溫度：#{cur_appar_round}°C\n降雨機率：#{precip_probability_percent}%\n濕度：#{humidity_percent}%\n一週預報：#{f.daily.summary}"
+        reply event, textmsg(report)
       when Line::Bot::Event::MessageType::Text
         message = {
           type: 'text',
